@@ -1,0 +1,7 @@
+Contact: mailto:booking@dennyscarrillo.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: es, en
+Canonical: https://dennyscarrillo.com/.well-known/security.txt
+
+# Si encuentras una vulnerabilidad, por favor escríbenos al email anterior.
+# If you find a vulnerability, please reach us at the email above.

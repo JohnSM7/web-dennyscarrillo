@@ -1,12 +1,17 @@
 import { defineConfig } from 'astro/config';
 import vue from '@astrojs/vue';
-import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://dennyscarrillo.com',
   integrations: [
     vue(),
-    tailwind({ applyBaseStyles: false }),
+    sitemap({
+      i18n: {
+        defaultLocale: 'es',
+        locales: { es: 'es-ES', en: 'en-US' },
+      },
+    }),
   ],
   i18n: {
     defaultLocale: 'es',

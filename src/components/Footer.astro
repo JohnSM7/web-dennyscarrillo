@@ -6,26 +6,23 @@ const f = t('footer');
 const year = new Date().getFullYear();
 ---
 
-<footer class="relative pt-20 pb-[clamp(6rem,22vw,18rem)] overflow-hidden border-t border-white/5">
-  <!-- Huge name BG — dos líneas que siempre caben en cualquier viewport -->
-  <div class="absolute inset-x-0 bottom-0 pointer-events-none select-none text-center px-2">
-    <div class="font-display font-black text-[clamp(3.5rem,16vw,14rem)] leading-[0.82] tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-b from-white/12 via-white/5 to-transparent">
-      <span class="block">DENNYS</span>
-      <span class="block">CARRILLO</span>
-    </div>
-  </div>
-
-  <div class="container-x relative">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-16">
+<footer class="relative overflow-hidden border-t border-white/5">
+  <!-- Content -->
+  <div class="container-x relative z-10 pt-20 pb-14">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
       <div class="max-w-md">
         <div class="flex items-center gap-3 mb-4">
-          <img src="/logo.png" alt="" class="w-10 h-auto" />
-          <div class="font-display font-bold text-sm tracking-[0.3em]">DENNYS<span class="text-gold">.</span>CARRILLO</div>
+          <img src="/logo.png" alt="DC" class="w-10 h-auto" />
+          <div class="font-display font-bold text-sm tracking-[0.3em]">
+            DENNYS<span class="text-gold">.</span>CARRILLO
+          </div>
         </div>
-        <p class="font-display text-2xl md:text-3xl italic font-light gold-text">"{f.tagline}"</p>
+        <p class="font-display text-2xl md:text-3xl italic font-light gold-text leading-tight">
+          "{f.tagline}"
+        </p>
       </div>
 
-      <div class="text-white/50 text-xs font-mono tracking-[0.2em] uppercase">
+      <div class="text-white/50 text-[11px] font-mono tracking-[0.2em] uppercase md:text-right">
         <div>© {year} · {f.rights}</div>
         <div class="mt-2 text-white/40">
           {f.made}
@@ -40,6 +37,24 @@ const year = new Date().getFullYear();
           </a>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Huge name watermark — arbitrary values para evitar fallos de purge -->
+  <div class="relative select-none pointer-events-none px-3 pb-6" aria-hidden="true">
+    <div
+      class="text-center font-display font-black leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
+      style="
+        font-size: clamp(3.5rem, 15vw, 13rem);
+        background-image: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 55%, rgba(255,255,255,0) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      "
+    >
+      <span class="block">DENNYS</span>
+      <span class="block">CARRILLO</span>
     </div>
   </div>
 </footer>

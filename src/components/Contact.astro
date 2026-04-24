@@ -56,16 +56,30 @@ const c = t('contact');
 
       <!-- Form -->
       <div class="lg:col-span-7">
-        <form class="reveal relative rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-12">
+        <form
+          id="booking-form"
+          class="reveal relative rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-12"
+          action="mailto:booking@dennyscarrillo.com"
+          method="post"
+          enctype="text/plain"
+          autocomplete="on"
+          novalidate
+        >
           <div class="absolute -top-px inset-x-10 h-[1px] bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
+
+          <!-- Honeypot anti-bots (hidden from humans) -->
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label>No completar<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
           <div class="grid md:grid-cols-2 gap-6">
             <label class="flex flex-col gap-2">
               <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.name}</span>
-              <input type="text" name="name" required class="field" />
+              <input type="text" name="name" required maxlength="80" autocomplete="name" class="field" />
             </label>
             <label class="flex flex-col gap-2">
               <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.email}</span>
-              <input type="email" name="email" required class="field" />
+              <input type="email" name="email" required maxlength="120" autocomplete="email" class="field" />
             </label>
             <label class="flex flex-col gap-2 md:col-span-2">
               <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.date}</span>
@@ -73,20 +87,64 @@ const c = t('contact');
             </label>
             <label class="flex flex-col gap-2 md:col-span-2">
               <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.message}</span>
-              <textarea name="message" rows="5" class="field resize-none"></textarea>
+              <textarea name="message" rows="5" required maxlength="2000" class="field resize-none"></textarea>
             </label>
           </div>
-          <div class="mt-8">
-            <button type="submit" class="btn-primary w-full md:w-auto" data-cursor="hover">
+          <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+            <button type="submit" class="btn-primary w-full sm:w-auto" data-cursor="hover">
               {c.send}
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
             </button>
+            <p class="text-[11px] text-white/40 leading-relaxed">
+              Se abrirá tu cliente de correo. No enviamos datos a ningún servidor.
+            </p>
           </div>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  // Intercepta el submit y construye un mailto seguro con el contenido.
+  // El form usa action="mailto:" como fallback sin JS; aquí lo mejoramos.
+  const form = document.getElementById('booking-form') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+
+      // Honeypot: si el bot rellena "website", simulamos éxito y descartamos.
+      if ((fd.get('website') as string | null)?.trim()) {
+        form.reset();
+        return;
+      }
+
+      const name = (fd.get('name') as string | null)?.trim() ?? '';
+      const email = (fd.get('email') as string | null)?.trim() ?? '';
+      const date = (fd.get('date') as string | null)?.trim() ?? '';
+      const message = (fd.get('message') as string | null)?.trim() ?? '';
+
+      if (!name || !email || !message) {
+        form.reportValidity();
+        return;
+      }
+
+      const subject = `Booking — ${name}${date ? ' · ' + date : ''}`;
+      const bodyLines = [
+        `Nombre: ${name}`,
+        `Email: ${email}`,
+        date ? `Fecha del evento: ${date}` : '',
+        '',
+        'Mensaje:',
+        message,
+      ].filter(Boolean).join('\r\n');
+
+      const href = `mailto:booking@dennyscarrillo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
+      window.location.href = href;
+    });
+  }
+</script>
 
 <style>
   .field {

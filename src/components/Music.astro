@@ -105,8 +105,10 @@ const genres = [
                 height="166"
                 scrolling="no"
                 frameborder="no"
-                allow="autoplay"
+                allow="autoplay; clipboard-write"
                 loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
                 title={`SoundCloud — ${tr.title}`}
                 src={buildEmbedSrc(tr.id)}
               ></iframe>

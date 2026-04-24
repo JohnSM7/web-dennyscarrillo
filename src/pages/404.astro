@@ -1,0 +1,33 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 · Dennys Carrillo" description="Página no encontrada.">
+  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-32 pb-20">
+    <div class="absolute inset-0 bg-gold-gradient opacity-[0.08] pointer-events-none"></div>
+
+    <div class="container-x relative text-center">
+      <div class="font-display font-black leading-[0.85] tracking-tight text-[clamp(6rem,28vw,22rem)] gradient-text select-none">
+        404
+      </div>
+      <p class="font-mono text-[11px] tracking-[0.4em] uppercase text-white/60 mt-4">
+        Pista no encontrada · Track not found
+      </p>
+      <h1 class="mt-6 font-display text-2xl md:text-4xl font-bold max-w-xl mx-auto">
+        <span class="gold-text">"La música nació libre"</span>, pero esta página se la llevó el viento.
+      </h1>
+      <p class="mt-6 text-white/65 max-w-md mx-auto">
+        Parece que el enlace está roto o la página ha sido movida. Vuelve al inicio y sigamos la fiesta.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4 justify-center">
+        <a href="/" class="btn-primary" data-cursor="hover">
+          Volver al inicio
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M7 1l6 6-6 6"/>
+          </svg>
+        </a>
+        <a href="/blog/" class="btn-ghost" data-cursor="hover">Ir al diario</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
