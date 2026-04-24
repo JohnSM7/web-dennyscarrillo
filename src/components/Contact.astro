@@ -8,14 +8,14 @@ const c = t('contact');
 <section id="contact" class="relative py-24 md:py-40 overflow-hidden">
   <!-- Ambient -->
   <div class="absolute inset-0 bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 -z-10"></div>
-  <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-tropic-magenta/10 blur-[160px] pointer-events-none"></div>
+  <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-gold-400/10 blur-[160px] pointer-events-none"></div>
 
   <div class="container-x relative">
     <div class="grid lg:grid-cols-12 gap-12 lg:gap-20">
       <!-- Left column -->
       <div class="lg:col-span-5">
         <div class="chip mb-6 reveal">
-          <span class="w-1 h-1 rounded-full bg-tropic-magenta"></span>
+          <span class="w-1 h-1 rounded-full bg-gold-400"></span>
           {c.chip}
         </div>
         <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight mb-8">
@@ -49,7 +49,7 @@ const c = t('contact');
       <!-- Form -->
       <div class="lg:col-span-7">
         <form class="reveal relative rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-12">
-          <div class="absolute -top-px inset-x-10 h-[1px] bg-gradient-to-r from-transparent via-tropic-coral to-transparent"></div>
+          <div class="absolute -top-px inset-x-10 h-[1px] bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
           <div class="grid md:grid-cols-2 gap-6">
             <label class="flex flex-col gap-2">
               <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.name}</span>
@@ -93,7 +93,7 @@ const c = t('contact');
   }
   .field:focus {
     outline: none;
-    border-color: rgba(44, 230, 215, 0.6);
+    border-color: rgba(230, 198, 122, 0.7);
     background: rgba(255, 255, 255, 0.06);
   }
   .field::-webkit-calendar-picker-indicator {

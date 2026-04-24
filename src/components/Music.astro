@@ -5,14 +5,14 @@ const t = useTranslations(lang);
 const m = t('music');
 
 const genres = [
-  { name: 'Reggaetón', color: 'from-tropic-magenta to-tropic-coral' },
-  { name: 'Afrobeats', color: 'from-tropic-sunset to-tropic-mango' },
-  { name: 'House', color: 'from-tropic-aqua to-tropic-ocean' },
-  { name: 'Disco', color: 'from-tropic-mango to-tropic-lime' },
-  { name: 'Salsa', color: 'from-tropic-coral to-tropic-magenta' },
-  { name: 'Bachata', color: 'from-tropic-purple to-tropic-magenta' },
-  { name: 'Techno', color: 'from-tropic-ocean to-tropic-purple' },
-  { name: 'Tropical', color: 'from-tropic-lime to-tropic-aqua' },
+  { name: 'Reggaetón', color: 'from-gold-400 to-gold-500' },
+  { name: 'Afrobeats', color: 'from-gold-600 to-gold-300' },
+  { name: 'House', color: 'from-gold-100 to-gold-700' },
+  { name: 'Disco', color: 'from-gold-300 to-gold-200' },
+  { name: 'Salsa', color: 'from-gold-500 to-gold-400' },
+  { name: 'Bachata', color: 'from-gold-800 to-gold-400' },
+  { name: 'Techno', color: 'from-gold-700 to-gold-800' },
+  { name: 'Tropical', color: 'from-gold-200 to-gold-100' },
 ];
 ---
 
@@ -21,7 +21,7 @@ const genres = [
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
       <div>
         <div class="chip mb-6 reveal">
-          <span class="w-1 h-1 rounded-full bg-tropic-coral"></span>
+          <span class="w-1 h-1 rounded-full bg-gold-500"></span>
           {m.chip}
         </div>
         <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight">
@@ -37,7 +37,7 @@ const genres = [
     <div class="grid md:grid-cols-2 gap-6 mb-16">
       {[0, 1].map((i) => (
         <div class="reveal group relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-ink-800/40 backdrop-blur">
-          <div class={`absolute inset-0 opacity-60 mix-blend-overlay ${i === 0 ? 'bg-sunset-gradient' : 'bg-aqua-gradient'}`}></div>
+          <div class={`absolute inset-0 opacity-60 mix-blend-overlay ${i === 0 ? 'bg-gold-warm' : 'bg-gold-bronze'}`}></div>
           <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/50 to-transparent"></div>
 
           <!-- Equalizer visual -->
@@ -53,7 +53,7 @@ const genres = [
           <div class="relative h-full flex flex-col justify-between p-7 md:p-10 z-10">
             <div class="flex items-center justify-between">
               <div class="chip bg-ink-950/50">
-                <span class="w-1.5 h-1.5 rounded-full bg-tropic-mango animate-pulse"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse"></span>
                 {m.placeholder_title}
               </div>
               <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/60">0{i + 1} / 02</span>

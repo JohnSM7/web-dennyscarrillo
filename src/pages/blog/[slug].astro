@@ -31,7 +31,7 @@ const minutes = Math.max(1, Math.round(words / 200));
         <img src={post.data.cover} alt="" class="absolute inset-0 w-full h-full object-cover" />
       )}
       <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/40"></div>
-      <div class="absolute inset-0 bg-gradient-to-br from-tropic-coral/20 via-transparent to-tropic-aqua/20 mix-blend-overlay"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-gold-500/20 via-transparent to-gold-100/20 mix-blend-overlay"></div>
 
       <div class="container-x relative h-full flex items-end pb-12">
         <div class="max-w-4xl">
@@ -57,7 +57,7 @@ const minutes = Math.max(1, Math.round(words / 200));
     <!-- Body -->
     <div class="container-x">
       <div class="max-w-2xl mx-auto py-16 md:py-24 prose-dennys">
-        <p class="text-xl text-white/80 leading-relaxed mb-10 font-light border-l-2 border-tropic-coral pl-6">
+        <p class="text-xl text-white/80 leading-relaxed mb-10 font-light border-l-2 border-gold-500 pl-6">
           {post.data.description}
         </p>
         <Content />
@@ -102,14 +102,14 @@ const minutes = Math.max(1, Math.round(words / 200));
   }
   .prose-dennys p { margin-bottom: 1.35rem; }
   .prose-dennys a {
-    background: linear-gradient(135deg, #FF4D6D, #2CE6D7);
+    background: linear-gradient(135deg, #E6C67A, #C9A24B);
     -webkit-background-clip: text;
             background-clip: text;
     -webkit-text-fill-color: transparent;
-    border-bottom: 1px solid rgba(255, 77, 109, 0.4);
+    border-bottom: 1px solid rgba(201, 162, 75, 0.4);
     transition: border-color .3s ease;
   }
-  .prose-dennys a:hover { border-bottom-color: rgba(44, 230, 215, 0.8); }
+  .prose-dennys a:hover { border-bottom-color: rgba(230, 198, 122, 0.9); }
   .prose-dennys strong { color: #fff; font-weight: 600; }
   .prose-dennys em { color: #E6C67A; font-style: italic; }
   .prose-dennys ul, .prose-dennys ol { margin: 1.25rem 0 1.75rem; padding-left: 1.5rem; }
@@ -121,14 +121,14 @@ const minutes = Math.max(1, Math.round(words / 200));
     left: 0; top: .7em;
     width: 6px; height: 6px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #FF4D6D, #FFCE3A);
+    background: linear-gradient(135deg, #C9A24B, #FBF3D6);
   }
   .prose-dennys blockquote {
     position: relative;
     margin: 2rem 0;
     padding: 1.5rem 1.75rem;
-    border-left: 3px solid #FFCE3A;
-    background: rgba(255, 206, 58, 0.05);
+    border-left: 3px solid #C9A24B;
+    background: rgba(201, 162, 75, 0.06);
     border-radius: 0 14px 14px 0;
     font-family: 'Unbounded', system-ui, sans-serif;
     font-size: 1.25rem;
@@ -141,7 +141,7 @@ const minutes = Math.max(1, Math.round(words / 200));
     padding: 2px 7px;
     border-radius: 6px;
     font-size: 0.9em;
-    color: #2CE6D7;
+    color: #E6C67A;
   }
   .prose-dennys hr {
     border: 0;

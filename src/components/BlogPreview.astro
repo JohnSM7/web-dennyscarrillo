@@ -21,13 +21,13 @@ const fmtDate = (d: Date) =>
 ---
 
 <section id="blog" class="relative py-24 md:py-40 overflow-hidden">
-  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-tropic-purple/15 blur-[150px] pointer-events-none"></div>
+  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-gold-800/15 blur-[150px] pointer-events-none"></div>
 
   <div class="container-x relative">
     <div class="flex items-end justify-between flex-wrap gap-6 mb-14">
       <div>
         <div class="chip mb-6 reveal">
-          <span class="w-1 h-1 rounded-full bg-tropic-lime"></span>
+          <span class="w-1 h-1 rounded-full bg-gold-200"></span>
           {b.chip}
         </div>
         <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight">
@@ -45,7 +45,7 @@ const fmtDate = (d: Date) =>
         {posts.map((p: any, i: number) => (
           <a
             href={`${basePath}${p.id}/`}
-            class="reveal group relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-tropic-aqua/30 transition-all flex flex-col"
+            class="reveal group relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-gold-100/30 transition-all flex flex-col"
             style={`transition-delay:${i * 0.08}s`}
             data-cursor="hover"
           >
@@ -53,12 +53,12 @@ const fmtDate = (d: Date) =>
               {p.data.cover ? (
                 <img src={p.data.cover} alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110" />
               ) : (
-                <div class="absolute inset-0 bg-tropic-gradient opacity-60"></div>
+                <div class="absolute inset-0 bg-gold-gradient opacity-60"></div>
               )}
               <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/40 to-transparent"></div>
               {p.data.city && (
                 <div class="absolute top-4 left-4 chip bg-ink-950/60">
-                  <span class="w-1 h-1 rounded-full bg-tropic-mango"></span>
+                  <span class="w-1 h-1 rounded-full bg-gold-300"></span>
                   {p.data.city}
                 </div>
               )}
@@ -72,7 +72,7 @@ const fmtDate = (d: Date) =>
                 {p.data.title}
               </h3>
               <p class="text-white/60 text-sm leading-relaxed flex-1">{p.data.description}</p>
-              <div class="mt-2 flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-tropic-aqua group-hover:text-tropic-mango transition-colors">
+              <div class="mt-2 flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-gold-100 group-hover:text-gold-300 transition-colors">
                 {b.read}
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M1 7h12M7 1l6 6-6 6"/>

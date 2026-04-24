@@ -32,7 +32,8 @@ onMounted(() => {
   };
   window.addEventListener('mousemove', onMove);
 
-  const colors = ['#FF4D6D', '#FF8A3D', '#FFCE3A', '#2CE6D7', '#A86BFF', '#FF4ECD'];
+  // Paleta monocroma dorada — del cream al bronce profundo
+  const colors = ['#FBF3D6', '#F5E3A5', '#E6C67A', '#D9B35C', '#C9A24B', '#B28836', '#8F6E2A'];
   const COUNT = window.matchMedia('(max-width: 768px)').matches ? 40 : 90;
 
   type P = { x: number; y: number; r: number; vx: number; vy: number; c: string; a: number };
