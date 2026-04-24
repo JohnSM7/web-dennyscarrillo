@@ -56,9 +56,10 @@ export const ui = {
     music: {
       chip: 'Sesiones & Tracks',
       title: 'Escucha el sonido.',
-      subtitle: 'Open format real: urbano, tropical, house y disco. Pronto podrás escuchar mis últimas sesiones aquí.',
-      placeholder_title: 'Nuevo mix en camino',
-      placeholder_text: 'Próximamente embeds desde SoundCloud, Mixcloud y Spotify.',
+      subtitle: 'Producciones, mezclas y señas de cabina. Pulsa play y siéntete como en la pista.',
+      more_title: '¿Quieres escuchar más?',
+      more_sub: 'Explora todas las sesiones, remixes y producciones en mi perfil.',
+      more_cta: 'Ir a SoundCloud',
     },
     events: {
       chip: 'Agenda',
@@ -149,9 +150,10 @@ export const ui = {
     music: {
       chip: 'Sets & Tracks',
       title: 'Hear the sound.',
-      subtitle: 'Real open format: urban, tropical, house and disco. Latest sets dropping here soon.',
-      placeholder_title: 'New mix on its way',
-      placeholder_text: 'SoundCloud, Mixcloud and Spotify embeds coming soon.',
+      subtitle: 'Productions, mixes and booth signatures. Hit play and step on the floor.',
+      more_title: 'Want to hear more?',
+      more_sub: 'Explore all sessions, remixes and productions on my profile.',
+      more_cta: 'Go to SoundCloud',
     },
     events: {
       chip: 'Tour',

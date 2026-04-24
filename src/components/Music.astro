@@ -4,6 +4,35 @@ const lang: Lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const m = t('music');
 
+const SC_PROFILE = 'https://soundcloud.com/dennyscarrillo';
+const SC_COLOR = 'c9a24b'; // dorado del logo
+
+// Tracks embebidos — 3 producciones representativas
+const tracks = [
+  {
+    id: '302728396',
+    title: 'EL MAÑANERO',
+    tag: 'Intro',
+    url: 'https://soundcloud.com/dennyscarrillo/aquemarlanocheintro',
+  },
+  {
+    id: '149192342',
+    title: 'Radio Activa Europa 103.7 FM',
+    tag: 'Producción',
+    url: 'https://soundcloud.com/dennyscarrillo/activa',
+  },
+  {
+    id: '212775396',
+    title: 'La Cita — Bacanísima PSD',
+    tag: 'Remix',
+    url: 'https://soundcloud.com/dennyscarrillo/la-cita-remix-bacanisima-psd',
+  },
+];
+
+const buildEmbedSrc = (id: string) =>
+  `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A${id}` +
+  `&color=%23${SC_COLOR}&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+
 const genres = [
   { name: 'Reggaetón', color: 'from-gold-400 to-gold-500' },
   { name: 'Afrobeats', color: 'from-gold-600 to-gold-300' },
@@ -16,8 +45,11 @@ const genres = [
 ];
 ---
 
-<section id="music" class="relative py-24 md:py-40">
-  <div class="container-x">
+<section id="music" class="relative py-24 md:py-40 overflow-hidden">
+  <!-- Accent -->
+  <div class="absolute top-1/4 -left-32 w-[400px] h-[400px] rounded-full bg-gold-500/10 blur-[140px] pointer-events-none"></div>
+
+  <div class="container-x relative">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
       <div>
         <div class="chip mb-6 reveal">
@@ -33,59 +65,105 @@ const genres = [
       <p class="reveal max-w-md text-white/70">{m.subtitle}</p>
     </div>
 
-    <!-- Mix placeholder cards -->
-    <div class="grid md:grid-cols-2 gap-6 mb-16">
-      {[0, 1].map((i) => (
-        <div class="reveal group relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-ink-800/40 backdrop-blur">
-          <div class={`absolute inset-0 opacity-60 mix-blend-overlay ${i === 0 ? 'bg-gold-warm' : 'bg-gold-bronze'}`}></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/50 to-transparent"></div>
-
-          <!-- Equalizer visual -->
-          <div class="absolute bottom-20 left-8 right-8 flex items-end gap-1 h-28 opacity-70">
-            {Array.from({ length: 42 }).map((_, k) => (
-              <div
-                class="flex-1 rounded-t bg-white/80 eq-bar"
-                style={`--h:${20 + ((k * 37) % 80)}%; --d:${(k * 80) % 600}ms`}
-              ></div>
-            ))}
+    <!-- SoundCloud embeds -->
+    <div class="grid lg:grid-cols-3 gap-5 mb-14">
+      {tracks.map((tr, i) => (
+        <div
+          class="reveal group relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur hover:border-gold-500/30 transition-colors flex flex-col"
+          style={`transition-delay:${i * 0.08}s`}
+        >
+          <!-- Card header -->
+          <div class="flex items-center justify-between px-5 pt-5 pb-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="shrink-0 w-9 h-9 rounded-xl bg-gold-gradient flex items-center justify-center shadow-[0_8px_24px_-8px_rgba(201,162,75,0.8)]">
+                <svg width="18" height="12" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-ink-950">
+                  <path fill="currentColor" d="M1.5 11a.5.5 0 0 1 .5.5v1a.5.5 0 1 1-1 0v-1a.5.5 0 0 1 .5-.5zm2-1a.5.5 0 0 1 .5.5v2a.5.5 0 1 1-1 0v-2a.5.5 0 0 1 .5-.5zm2-1a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5zm2-2a.5.5 0 0 1 .5.5v5a.5.5 0 1 1-1 0v-5a.5.5 0 0 1 .5-.5zm2-1a.5.5 0 0 1 .5.5v6a.5.5 0 1 1-1 0v-6a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v6a.5.5 0 1 1-1 0v-6a.5.5 0 0 1 .5-.5zm13-1c-.3 0-.58.05-.85.14C23.28 2.92 21 .5 18 .5c-2 0-3.78 1.04-4.8 2.6a.5.5 0 0 0-.2.4v10a.5.5 0 0 0 .5.5h11a3 3 0 0 0 0-6zm-10 2a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+              </span>
+              <div class="min-w-0">
+                <div class="font-mono text-[9px] tracking-[0.3em] uppercase text-gold-300/80">{tr.tag}</div>
+                <a
+                  href={tr.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block font-display font-bold text-base leading-tight text-white hover:text-gold-300 transition-colors truncate"
+                  data-cursor="hover"
+                  title={tr.title}
+                >
+                  {tr.title}
+                </a>
+              </div>
+            </div>
+            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40">0{i + 1}</span>
           </div>
 
-          <div class="relative h-full flex flex-col justify-between p-7 md:p-10 z-10">
-            <div class="flex items-center justify-between">
-              <div class="chip bg-ink-950/50">
-                <span class="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse"></span>
-                {m.placeholder_title}
-              </div>
-              <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/60">0{i + 1} / 02</span>
-            </div>
-            <div>
-              <h3 class="font-display text-2xl md:text-4xl font-bold mb-2">
-                {i === 0 ? 'Calor Latino Vol. ' + String(i + 1).padStart(2, '0') : 'Open Format Session ' + String(i + 1).padStart(2, '0')}
-              </h3>
-              <p class="text-white/70 text-sm max-w-md">{m.placeholder_text}</p>
-              <div class="mt-5 flex items-center gap-4">
-                <button disabled class="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all" data-cursor="hover">
-                  <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor"><path d="M14 8L0 16V0z"/></svg>
-                </button>
-                <div class="font-mono text-[11px] tracking-[0.25em] uppercase text-white/60">
-                  <div>SoundCloud · Mixcloud</div>
-                  <div class="text-white/40">Coming soon</div>
-                </div>
-              </div>
+          <!-- SoundCloud iframe -->
+          <div class="px-3 pb-4">
+            <div class="rounded-xl overflow-hidden border border-white/5 bg-ink-900">
+              <iframe
+                width="100%"
+                height="166"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                loading="lazy"
+                title={`SoundCloud — ${tr.title}`}
+                src={buildEmbedSrc(tr.id)}
+              ></iframe>
             </div>
           </div>
         </div>
       ))}
     </div>
 
+    <!-- CTA: ¿Quieres escuchar más? -->
+    <div class="reveal relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl">
+      <div class="absolute inset-0 bg-gold-bronze opacity-20 pointer-events-none"></div>
+      <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-gold-500/30 blur-[100px]"></div>
+      <div class="absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-gold-300/20 blur-[100px]"></div>
+
+      <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6 p-8 md:p-12">
+        <div class="flex items-start gap-5">
+          <!-- Animated SC icon -->
+          <div class="relative hidden sm:block">
+            <div class="absolute inset-0 bg-gold-500/40 rounded-2xl blur-xl animate-glow"></div>
+            <div class="relative w-14 h-14 rounded-2xl bg-gold-gradient flex items-center justify-center shadow-[0_10px_30px_-10px_rgba(201,162,75,0.9)]">
+              <svg width="28" height="18" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-ink-950">
+                <path fill="currentColor" d="M1.5 11a.5.5 0 0 1 .5.5v1a.5.5 0 1 1-1 0v-1a.5.5 0 0 1 .5-.5zm2-1a.5.5 0 0 1 .5.5v2a.5.5 0 1 1-1 0v-2a.5.5 0 0 1 .5-.5zm2-1a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5zm2-2a.5.5 0 0 1 .5.5v5a.5.5 0 1 1-1 0v-5a.5.5 0 0 1 .5-.5zm2-1a.5.5 0 0 1 .5.5v6a.5.5 0 1 1-1 0v-6a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v6a.5.5 0 1 1-1 0v-6a.5.5 0 0 1 .5-.5zm13-1c-.3 0-.58.05-.85.14C23.28 2.92 21 .5 18 .5c-2 0-3.78 1.04-4.8 2.6a.5.5 0 0 0-.2.4v10a.5.5 0 0 0 .5.5h11a3 3 0 0 0 0-6zm-10 2a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display text-2xl md:text-3xl font-bold mb-1">
+              <span class="gradient-text">{m.more_title}</span>
+            </h3>
+            <p class="text-white/65 text-sm md:text-base max-w-lg">{m.more_sub}</p>
+          </div>
+        </div>
+
+        <a
+          href={SC_PROFILE}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary shrink-0 group"
+          data-cursor="hover"
+        >
+          {m.more_cta}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:translate-x-1">
+            <path d="M1 7h12M7 1l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
     <!-- Genre cloud -->
-    <div class="reveal">
+    <div class="reveal mt-16">
       <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 mb-6 text-center">
         · Géneros · Genres ·
       </div>
       <div class="flex flex-wrap gap-3 justify-center">
         {genres.map((g) => (
-          <span class={`px-5 py-2.5 rounded-full font-display font-semibold text-sm text-white bg-gradient-to-r ${g.color} hover:scale-110 transition-transform cursor-default`}>
+          <span class={`px-5 py-2.5 rounded-full font-display font-semibold text-sm text-ink-950 bg-gradient-to-r ${g.color} hover:scale-110 transition-transform cursor-default`}>
             {g.name}
           </span>
         ))}
@@ -93,15 +171,3 @@ const genres = [
     </div>
   </div>
 </section>
-
-<style>
-  .eq-bar {
-    height: var(--h);
-    transform-origin: bottom;
-    animation: eq 1.2s var(--d) ease-in-out infinite alternate;
-  }
-  @keyframes eq {
-    0% { transform: scaleY(0.2); opacity: 0.4; }
-    100% { transform: scaleY(1); opacity: 0.9; }
-  }
-</style>
