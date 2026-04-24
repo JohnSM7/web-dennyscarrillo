@@ -7,46 +7,13 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="relative overflow-hidden border-t border-white/5">
-  <!-- Content -->
-  <div class="container-x relative z-10 pt-20 pb-14">
-    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
-      <div class="max-w-md">
-        <div class="flex items-center gap-3 mb-4">
-          <img src="/logo.png" alt="DC" class="w-10 h-auto" />
-          <div class="font-display font-bold text-sm tracking-[0.3em]">
-            DENNYS<span class="text-gold">.</span>CARRILLO
-          </div>
-        </div>
-        <p class="font-display text-2xl md:text-3xl italic font-light gold-text leading-tight">
-          "{f.tagline}"
-        </p>
-      </div>
-
-      <div class="text-white/50 text-[11px] font-mono tracking-[0.2em] uppercase md:text-right">
-        <div>© {year} · {f.rights}</div>
-        <div class="mt-2 text-white/40">
-          {f.made}
-          <a
-            href="https://www.tanesolutions.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="ml-1 gold-text hover:opacity-80 transition-opacity"
-            data-cursor="hover"
-          >
-            Tane Solutions
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Huge name watermark — arbitrary values para evitar fallos de purge -->
-  <div class="relative select-none pointer-events-none px-3 pb-6" aria-hidden="true">
+  <!-- 1) Huge watermark — arriba, firma visual -->
+  <div class="relative select-none pointer-events-none pt-16 px-3" aria-hidden="true">
     <div
       class="text-center font-display font-black leading-[0.82] tracking-[-0.04em] whitespace-nowrap"
       style="
         font-size: clamp(3.5rem, 15vw, 13rem);
-        background-image: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 55%, rgba(255,255,255,0) 100%);
+        background-image: linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 60%, rgba(255,255,255,0) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -55,6 +22,43 @@ const year = new Date().getFullYear();
     >
       <span class="block">DENNYS</span>
       <span class="block">CARRILLO</span>
+    </div>
+  </div>
+
+  <!-- 2) Tagline centrada -->
+  <div class="container-x relative z-10">
+    <div class="flex flex-col items-center text-center gap-4 pt-4 pb-10">
+      <div class="flex items-center gap-3">
+        <img src="/logo.png" alt="DC" class="w-8 h-auto" />
+        <div class="font-display font-bold text-[11px] tracking-[0.35em] text-white/80">
+          DENNYS<span class="text-gold">.</span>CARRILLO
+        </div>
+      </div>
+      <p class="font-display text-lg md:text-2xl italic font-light gold-text">
+        "{f.tagline}"
+      </p>
+    </div>
+
+    <!-- 3) Divider -->
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+    <!-- 4) Bottom row: copyright izquierda · powered by derecha -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-6 text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase">
+      <div class="text-white/50 text-center sm:text-left">
+        © {year} · Dennys Carrillo · {f.rights}
+      </div>
+      <div class="text-white/40 text-center sm:text-right">
+        {f.made}
+        <a
+          href="https://www.tanesolutions.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ml-1 gold-text hover:opacity-80 transition-opacity"
+          data-cursor="hover"
+        >
+          Tane Solutions
+        </a>
+      </div>
     </div>
   </div>
 </footer>
