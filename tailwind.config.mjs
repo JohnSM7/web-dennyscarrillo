@@ -34,9 +34,9 @@ export default {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       animation: {
-        'marquee': 'marquee 30s linear infinite',
-        'marquee-slow': 'marquee 60s linear infinite',
-        'marquee-reverse': 'marquee-reverse 40s linear infinite',
+        'marquee': 'marquee 22s linear infinite',
+        'marquee-slow': 'marquee 40s linear infinite',
+        'marquee-reverse': 'marquee-reverse 26s linear infinite',
         'float': 'float 6s ease-in-out infinite',
         'glow': 'glow 3s ease-in-out infinite',
         'spin-slow': 'spin 20s linear infinite',

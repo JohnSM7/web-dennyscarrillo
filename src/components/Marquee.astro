@@ -9,18 +9,36 @@ interface Props {
   gradient?: boolean;
 }
 const { reverse = false, gradient = false } = Astro.props as Props;
-const loop = [...items, ...items];
 ---
 
 <div class="relative py-6 md:py-8 overflow-hidden border-y border-white/5 bg-ink-900/40 backdrop-blur-sm">
-  <div class={`flex gap-10 whitespace-nowrap will-change-transform ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
-    {loop.map((item, i) => (
-      <div class="flex items-center gap-10 shrink-0">
-        <span class={`font-display text-3xl md:text-5xl font-extrabold tracking-tight ${gradient ? 'gradient-text' : (i % 2 === 0 ? 'text-white' : 'gold-text')}`}>
-          {item}
-        </span>
-        <span class="text-gold-500 text-2xl md:text-4xl">✦</span>
+  <div class={`marquee-track ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}>
+    {/* Se renderizan dos pasadas idénticas para el loop sin saltos */}
+    {[0, 1].map(() => (
+      <div class="marquee-group" aria-hidden="false">
+        {items.map((item, i) => (
+          <div class="flex items-center gap-10 shrink-0">
+            <span class={`font-display text-3xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap ${gradient ? 'gradient-text' : (i % 2 === 0 ? 'text-white' : 'gold-text')}`}>
+              {item}
+            </span>
+            <span class="text-gold-500 text-2xl md:text-4xl select-none">✦</span>
+          </div>
+        ))}
       </div>
     ))}
   </div>
 </div>
+
+<style>
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  .marquee-group {
+    display: flex;
+    gap: 2.5rem; /* 10 */
+    padding-right: 2.5rem;
+    flex-shrink: 0;
+  }
+</style>

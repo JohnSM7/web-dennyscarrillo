@@ -5,7 +5,7 @@ const t = useTranslations(lang);
 const c = t('contact');
 ---
 
-<section id="contact" class="relative py-24 md:py-40 overflow-hidden">
+<section id="contact" class="relative py-20 sm:py-24 md:py-40 overflow-hidden">
   <!-- Ambient -->
   <div class="absolute inset-0 bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 -z-10"></div>
   <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-gold-400/10 blur-[160px] pointer-events-none"></div>
@@ -33,11 +33,19 @@ const c = t('contact');
           </a>
         </div>
 
-        <!-- Socials placeholder -->
+        <!-- Socials: SC activo, resto placeholder a la espera de URLs -->
         <div class="reveal mt-12">
           <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-4">{c.soon}</div>
-          <div class="flex gap-3">
-            {['IG', 'SC', 'MX', 'SP', 'YT'].map((s) => (
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="https://soundcloud.com/dennyscarrillo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-11 h-11 rounded-full border border-gold-500/40 bg-gold-500/10 grid place-items-center font-mono text-[10px] tracking-widest text-gold-300 hover:bg-gold-500/20 hover:border-gold-300 transition-colors"
+              title="SoundCloud"
+              data-cursor="hover"
+            >SC</a>
+            {['IG', 'MX', 'SP', 'YT'].map((s) => (
               <span class="w-11 h-11 rounded-full border border-white/10 bg-white/5 grid place-items-center font-mono text-[10px] tracking-widest text-white/40">
                 {s}
               </span>

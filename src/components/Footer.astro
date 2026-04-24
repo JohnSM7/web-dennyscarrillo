@@ -6,11 +6,12 @@ const f = t('footer');
 const year = new Date().getFullYear();
 ---
 
-<footer class="relative pt-20 pb-10 overflow-hidden border-t border-white/5">
-  <!-- Huge name BG -->
-  <div class="absolute inset-x-0 bottom-[-20px] pointer-events-none overflow-hidden select-none">
-    <div class="font-display font-black text-[18vw] leading-[0.85] tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-transparent whitespace-nowrap">
-      DENNYS CARRILLO
+<footer class="relative pt-20 pb-[clamp(6rem,22vw,18rem)] overflow-hidden border-t border-white/5">
+  <!-- Huge name BG — dos líneas que siempre caben en cualquier viewport -->
+  <div class="absolute inset-x-0 bottom-0 pointer-events-none select-none text-center px-2">
+    <div class="font-display font-black text-[clamp(3.5rem,16vw,14rem)] leading-[0.82] tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-b from-white/12 via-white/5 to-transparent">
+      <span class="block">DENNYS</span>
+      <span class="block">CARRILLO</span>
     </div>
   </div>
 

@@ -75,19 +75,19 @@ const links = [
 <!-- Mobile menu overlay -->
 <div
   id="mobile-menu"
-  class="fixed inset-0 z-40 bg-ink-950/95 backdrop-blur-xl pointer-events-none opacity-0 transition-opacity duration-500"
+  class="fixed inset-0 z-40 bg-ink-950/95 backdrop-blur-xl pointer-events-none opacity-0 transition-opacity duration-500 overflow-y-auto"
 >
-  <div class="absolute inset-0 bg-gold-gradient opacity-10"></div>
-  <div class="relative h-full flex flex-col items-center justify-center gap-6">
+  <div class="absolute inset-0 bg-gold-gradient opacity-10 pointer-events-none"></div>
+  <div class="relative min-h-full flex flex-col items-center justify-center gap-5 py-24 px-6">
     {links.map((l) => (
       <a
         href={l.href}
-        class="mobile-link font-display text-4xl font-bold text-white/90 hover:gradient-text transition-all"
+        class="mobile-link font-display text-3xl sm:text-4xl font-bold text-white/90 hover:gradient-text transition-all"
       >
         {l.label}
       </a>
     ))}
-    <a href="#contact" class="mobile-link btn-primary mt-6">{nav.booking}</a>
+    <a href={anchor('#contact')} class="mobile-link btn-primary mt-4">{nav.booking}</a>
   </div>
 </div>
 
