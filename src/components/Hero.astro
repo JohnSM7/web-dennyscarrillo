@@ -12,19 +12,21 @@ const h = t('hero');
 
   <!-- Portrait -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute right-[-18%] sm:right-[-8%] md:right-[4%] top-[62%] md:top-1/2 -translate-y-1/2 w-[85%] sm:w-[70%] md:w-[58%] lg:w-[46%] max-w-[680px] hero-portrait opacity-55 md:opacity-100">
+    <div class="absolute right-[-18%] sm:right-[-8%] md:right-[4%] top-[45%] sm:top-[48%] md:top-[46%] -translate-y-1/2 w-[85%] sm:w-[70%] md:w-[58%] lg:w-[46%] max-w-[680px] hero-portrait opacity-60 md:opacity-100">
       <div class="relative">
+        <!-- Glow dorado detrás -->
         <div class="absolute inset-0 bg-gold-gradient blur-[80px] opacity-30 animate-glow"></div>
+        <!-- Imagen con máscara radial: bordes difuminados para fundirse con el fondo -->
         <img
           src="/fotos/imgPrincipal.png"
           alt="Dennys Carrillo"
-          class="relative w-full h-auto object-contain mix-blend-screen drop-shadow-[0_30px_80px_rgba(0,0,0,0.7)]"
+          class="hero-portrait-img relative w-full h-auto object-contain mix-blend-screen drop-shadow-[0_30px_80px_rgba(0,0,0,0.7)]"
         />
       </div>
     </div>
-    <!-- Gradient ambient accents on portrait -->
-    <div class="absolute right-[10%] top-[15%] w-48 md:w-64 h-48 md:h-64 rounded-full bg-gold-500/30 blur-[100px]"></div>
-    <div class="absolute right-[8%] bottom-[10%] w-60 md:w-80 h-60 md:h-80 rounded-full bg-gold-100/25 blur-[120px]"></div>
+    <!-- Gradient ambient accents -->
+    <div class="absolute right-[10%] top-[10%] w-48 md:w-64 h-48 md:h-64 rounded-full bg-gold-500/30 blur-[100px]"></div>
+    <div class="absolute right-[8%] bottom-[15%] w-60 md:w-80 h-60 md:h-80 rounded-full bg-gold-100/25 blur-[120px]"></div>
   </div>
 
   <!-- Content -->
@@ -128,3 +130,21 @@ const h = t('hero');
     window.addEventListener('app:ready', run, { once: true });
   }
 </script>
+
+<style>
+  /* Máscara radial: centro sólido, bordes transparentes → fusión natural con el fondo */
+  .hero-portrait-img {
+    -webkit-mask-image:
+      radial-gradient(ellipse 75% 70% at 50% 45%, #000 45%, rgba(0,0,0,0.85) 65%, transparent 95%),
+      linear-gradient(180deg, transparent 0%, #000 15%, #000 70%, transparent 100%);
+    -webkit-mask-composite: source-in;
+            mask-image:
+      radial-gradient(ellipse 75% 70% at 50% 45%, #000 45%, rgba(0,0,0,0.85) 65%, transparent 95%),
+      linear-gradient(180deg, transparent 0%, #000 15%, #000 70%, transparent 100%);
+            mask-composite: intersect;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+  }
+</style>
