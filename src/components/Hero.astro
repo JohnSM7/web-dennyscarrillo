@@ -20,9 +20,9 @@ const h = t('hero');
         <div class="absolute inset-0 bg-gold-gradient blur-[80px] opacity-30 animate-glow"></div>
         <!-- Imagen con máscara radial: bordes difuminados para fundirse con el fondo -->
         <img
-          src="/fotos/imgPrincipal.png"
+          src="/fotos/Principal_transparente.png"
           alt="Dennys Carrillo"
-          class="hero-portrait-img relative w-full h-auto object-contain mix-blend-screen"
+          class="hero-portrait-img relative w-full h-auto object-contain"
         />
       </div>
     </div>
@@ -134,28 +134,8 @@ const h = t('hero');
 </script>
 
 <style>
-  /* Máscara radial agresiva: el rostro nítido, todo lo demás fade hasta transparente.
-     Elimina los bordes negros del PNG original sin dejar contornos visibles. */
+  /* PNG con transparencia — sombra suave para integrarlo con el fondo */
   .hero-portrait-img {
-    -webkit-mask-image: radial-gradient(
-      ellipse 55% 55% at 50% 40%,
-      #000 15%,
-      rgba(0, 0, 0, 0.92) 32%,
-      rgba(0, 0, 0, 0.55) 55%,
-      rgba(0, 0, 0, 0.2) 72%,
-      transparent 85%
-    );
-            mask-image: radial-gradient(
-      ellipse 55% 55% at 50% 40%,
-      #000 15%,
-      rgba(0, 0, 0, 0.92) 32%,
-      rgba(0, 0, 0, 0.55) 55%,
-      rgba(0, 0, 0, 0.2) 72%,
-      transparent 85%
-    );
-    -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.55));
   }
 </style>
