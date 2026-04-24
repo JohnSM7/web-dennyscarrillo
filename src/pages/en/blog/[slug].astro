@@ -1,0 +1,118 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { useTranslations } from '~/i18n/ui';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blogEn', ({ data }) => !data.draft);
+  return posts.map((p) => ({ params: { slug: p.id }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const t = useTranslations('en');
+const b = t('blog');
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })
+    .format(d).toUpperCase();
+
+const text = (post.body || '').replace(/<[^>]*>/g, '');
+const words = text.trim().split(/\s+/).length;
+const minutes = Math.max(1, Math.round(words / 200));
+---
+
+<BaseLayout title={`${post.data.title} · Dennys Carrillo`} description={post.data.description}>
+  <article class="relative pt-32 pb-24 md:pt-40">
+    <div class="relative h-[50vh] md:h-[65vh] overflow-hidden">
+      {post.data.cover && (
+        <img src={post.data.cover} alt="" class="absolute inset-0 w-full h-full object-cover" />
+      )}
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-tropic-coral/20 via-transparent to-tropic-aqua/20 mix-blend-overlay"></div>
+
+      <div class="container-x relative h-full flex items-end pb-12">
+        <div class="max-w-4xl">
+          <a href="/en/blog/" class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-white/60 hover:text-white transition-colors mb-6" data-cursor="hover">
+            {b.back}
+          </a>
+          <div class="flex flex-wrap items-center gap-3 mb-5 font-mono text-[11px] tracking-[0.25em] uppercase text-white/70">
+            <span>{fmtDate(post.data.date)}</span>
+            {post.data.city && <span class="text-white/40">·</span>}
+            {post.data.city && <span>{post.data.city}</span>}
+            {post.data.venue && <span class="text-white/40">·</span>}
+            {post.data.venue && <span>{post.data.venue}</span>}
+            <span class="text-white/40">·</span>
+            <span>{minutes} {b.minutes}</span>
+          </div>
+          <h1 class="font-display text-[clamp(2rem,6vw,5rem)] leading-[0.95] font-extrabold tracking-tight">
+            {post.data.title}
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-x">
+      <div class="max-w-2xl mx-auto py-16 md:py-24 prose-dennys">
+        <p class="text-xl text-white/80 leading-relaxed mb-10 font-light border-l-2 border-tropic-coral pl-6">
+          {post.data.description}
+        </p>
+        <Content />
+
+        {post.data.tags.length > 0 && (
+          <div class="mt-16 pt-8 border-t border-white/10 flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <span class="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1.5 rounded-full border border-white/10 text-white/60">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .prose-dennys {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+  .prose-dennys h2 {
+    font-family: 'Unbounded', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    color: #fff;
+  }
+  .prose-dennys h3 {
+    font-family: 'Unbounded', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.35rem;
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  .prose-dennys p { margin-bottom: 1.35rem; }
+  .prose-dennys strong { color: #fff; font-weight: 600; }
+  .prose-dennys em { color: #E6C67A; font-style: italic; }
+  .prose-dennys ul { list-style: none; margin: 1.25rem 0 1.75rem; padding-left: 1.5rem; }
+  .prose-dennys ul li { position: relative; padding-left: 1.25rem; margin-bottom: .5rem; }
+  .prose-dennys ul li::before {
+    content: ''; position: absolute; left: 0; top: .7em;
+    width: 6px; height: 6px; border-radius: 999px;
+    background: linear-gradient(135deg, #FF4D6D, #FFCE3A);
+  }
+  .prose-dennys blockquote {
+    margin: 2rem 0; padding: 1.5rem 1.75rem;
+    border-left: 3px solid #FFCE3A;
+    background: rgba(255, 206, 58, 0.05);
+    border-radius: 0 14px 14px 0;
+    font-family: 'Unbounded', system-ui, sans-serif;
+    font-size: 1.25rem; font-style: italic; color: #fff;
+  }
+</style>

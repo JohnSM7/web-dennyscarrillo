@@ -1,0 +1,103 @@
+---
+import { getLangFromUrl, useTranslations, type Lang } from '~/i18n/ui';
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const c = t('contact');
+---
+
+<section id="contact" class="relative py-24 md:py-40 overflow-hidden">
+  <!-- Ambient -->
+  <div class="absolute inset-0 bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 -z-10"></div>
+  <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-tropic-magenta/10 blur-[160px] pointer-events-none"></div>
+
+  <div class="container-x relative">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-20">
+      <!-- Left column -->
+      <div class="lg:col-span-5">
+        <div class="chip mb-6 reveal">
+          <span class="w-1 h-1 rounded-full bg-tropic-magenta"></span>
+          {c.chip}
+        </div>
+        <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight mb-8">
+          {c.title.split(' ').map((w, i) => (
+            <span class={`inline-block ${i === 0 ? '' : 'gradient-text'} mr-3`}>{w}</span>
+          ))}
+        </h2>
+        <p class="reveal text-white/70 text-base md:text-lg leading-relaxed max-w-md mb-10">{c.subtitle}</p>
+
+        <div class="reveal space-y-4">
+          <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.or}</div>
+          <a href="mailto:booking@dennyscarrillo.com" class="inline-flex items-center gap-3 font-display text-xl md:text-2xl gold-text hover:opacity-80 transition-opacity" data-cursor="hover">
+            booking@dennyscarrillo.com
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 8h14M8 1l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Socials placeholder -->
+        <div class="reveal mt-12">
+          <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-4">{c.soon}</div>
+          <div class="flex gap-3">
+            {['IG', 'SC', 'MX', 'SP', 'YT'].map((s) => (
+              <span class="w-11 h-11 rounded-full border border-white/10 bg-white/5 grid place-items-center font-mono text-[10px] tracking-widest text-white/40">
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="lg:col-span-7">
+        <form class="reveal relative rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-12">
+          <div class="absolute -top-px inset-x-10 h-[1px] bg-gradient-to-r from-transparent via-tropic-coral to-transparent"></div>
+          <div class="grid md:grid-cols-2 gap-6">
+            <label class="flex flex-col gap-2">
+              <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.name}</span>
+              <input type="text" name="name" required class="field" />
+            </label>
+            <label class="flex flex-col gap-2">
+              <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.email}</span>
+              <input type="email" name="email" required class="field" />
+            </label>
+            <label class="flex flex-col gap-2 md:col-span-2">
+              <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.date}</span>
+              <input type="date" name="date" class="field" />
+            </label>
+            <label class="flex flex-col gap-2 md:col-span-2">
+              <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">{c.message}</span>
+              <textarea name="message" rows="5" class="field resize-none"></textarea>
+            </label>
+          </div>
+          <div class="mt-8">
+            <button type="submit" class="btn-primary w-full md:w-auto" data-cursor="hover">
+              {c.send}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .field {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 14px 18px;
+    color: #fff;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    transition: border-color .3s ease, background .3s ease;
+  }
+  .field:focus {
+    outline: none;
+    border-color: rgba(44, 230, 215, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .field::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.5);
+    cursor: pointer;
+  }
+</style>

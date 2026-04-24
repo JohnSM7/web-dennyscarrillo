@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { useTranslations } from '~/i18n/ui';
+
+const t = useTranslations('es');
+const b = t('blog');
+const posts = (await getCollection('blogEs', ({ data }) => !data.draft))
+  .sort((a, z) => +new Date(z.data.date) - +new Date(a.data.date));
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+    .format(d).toUpperCase();
+---
+
+<BaseLayout title={`${b.chip} · Dennys Carrillo`} description={b.subtitle}>
+  <section class="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+    <div class="absolute -top-20 right-0 w-[600px] h-[500px] rounded-full bg-tropic-coral/15 blur-[140px] pointer-events-none"></div>
+
+    <div class="container-x relative">
+      <div class="max-w-3xl mb-16">
+        <div class="chip mb-6">
+          <span class="w-1 h-1 rounded-full bg-tropic-lime"></span>
+          {b.chip}
+        </div>
+        <h1 class="font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] font-extrabold tracking-tight mb-6">
+          <span>{b.title.split(' ').slice(0, -1).join(' ')}</span>{' '}
+          <span class="gradient-text italic font-light">{b.title.split(' ').at(-1)}</span>
+        </h1>
+        <p class="text-white/70 text-lg max-w-xl">{b.subtitle}</p>
+      </div>
+
+      {posts.length === 0 ? (
+        <div class="text-center text-white/50 font-mono text-sm tracking-[0.25em] uppercase py-20">{b.empty}</div>
+      ) : (
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          {posts.map((p, i) => (
+            <a
+              href={`/blog/${p.id}/`}
+              class={`group relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-tropic-aqua/30 transition-all flex flex-col ${i === 0 ? 'md:col-span-2' : ''}`}
+              data-cursor="hover"
+            >
+              <div class={`relative overflow-hidden ${i === 0 ? 'aspect-[21/9]' : 'aspect-[16/10]'}`}>
+                {p.data.cover ? (
+                  <img src={p.data.cover} alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105" />
+                ) : (
+                  <div class="absolute inset-0 bg-tropic-gradient opacity-50"></div>
+                )}
+                <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/30 to-transparent"></div>
+                {p.data.city && (
+                  <div class="absolute top-5 left-5 chip bg-ink-950/60">
+                    <span class="w-1 h-1 rounded-full bg-tropic-mango"></span>
+                    {p.data.city}
+                  </div>
+                )}
+              </div>
+              <div class="p-7 md:p-9 flex flex-col gap-3">
+                <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">
+                  {fmtDate(p.data.date)}
+                  {p.data.venue && <span class="text-white/30"> · {p.data.venue}</span>}
+                </div>
+                <h2 class={`font-display ${i === 0 ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'} font-bold leading-tight group-hover:gradient-text transition-colors`}>
+                  {p.data.title}
+                </h2>
+                <p class="text-white/60 leading-relaxed">{p.data.description}</p>
+                {p.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2 mt-3">
+                    {p.data.tags.map((tag) => (
+                      <span class="text-[10px] font-mono tracking-[0.2em] uppercase px-2.5 py-1 rounded-full border border-white/10 text-white/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

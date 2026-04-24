@@ -1,0 +1,88 @@
+---
+import { getLangFromUrl, useTranslations, type Lang } from '~/i18n/ui';
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const g = t('gallery');
+
+// Añade aquí nuevas fotos cuando las tengas.
+const photos = [
+  { src: '/fotos/imgPrincipal.png', tag: 'Studio' },
+  { src: '/fotos/Firefly.png', tag: 'Shoot' },
+];
+---
+
+<section id="gallery" class="relative py-24 md:py-40">
+  <div class="container-x">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-14">
+      <div>
+        <div class="chip mb-6 reveal">
+          <span class="w-1 h-1 rounded-full bg-tropic-aqua"></span>
+          {g.chip}
+        </div>
+        <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight">
+          <span>{g.title.split(' ')[0]}</span>{' '}
+          <span class="gradient-text">{g.title.split(' ').slice(1).join(' ')}</span>
+        </h2>
+      </div>
+      <p class="reveal max-w-sm text-white/70">{g.subtitle}</p>
+    </div>
+
+    <div class="grid grid-cols-12 gap-4 md:gap-6">
+      <!-- Large -->
+      <div class="col-span-12 md:col-span-7 reveal">
+        <div class="relative aspect-[4/3] rounded-3xl overflow-hidden group tilt-card">
+          <img src={photos[0].src} alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-5 left-5 chip bg-ink-950/60">{photos[0].tag}</div>
+        </div>
+      </div>
+      <!-- Medium -->
+      <div class="col-span-12 md:col-span-5 reveal" style="transition-delay:.1s">
+        <div class="relative aspect-[4/3] rounded-3xl overflow-hidden group tilt-card">
+          <img src={photos[1].src} alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-tr from-tropic-coral/30 via-transparent to-tropic-aqua/20 mix-blend-overlay"></div>
+          <div class="absolute bottom-5 left-5 chip bg-ink-950/60">{photos[1].tag}</div>
+        </div>
+      </div>
+
+      <!-- Extras: rellenar con más fotos editando el array `photos` arriba -->
+      {photos.slice(2).map((p, i) => (
+        <div class="col-span-6 md:col-span-4 reveal" style={`transition-delay:${(i + 2) * 0.1}s`}>
+          <div class="relative aspect-[3/4] rounded-3xl overflow-hidden group tilt-card">
+            <img src={p.src} alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 chip bg-ink-950/60">{p.tag}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Subtle tilt on hover
+  const cards = document.querySelectorAll<HTMLElement>('.tilt-card');
+  cards.forEach((card) => {
+    let raf = 0;
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.transform = `perspective(900px) rotateX(${-y * 6}deg) rotateY(${x * 8}deg)`;
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(raf);
+      card.style.transform = '';
+    });
+  });
+</script>
+
+<style>
+  .tilt-card {
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    will-change: transform;
+  }
+</style>

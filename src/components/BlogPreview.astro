@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations, type Lang } from '~/i18n/ui';
+
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const b = t('blog');
+
+const collectionName = lang === 'es' ? 'blogEs' : 'blogEn';
+const all = await getCollection(collectionName as any, ({ data }: any) => !data.draft);
+const posts = all
+  .sort((a: any, z: any) => +new Date(z.data.date) - +new Date(a.data.date))
+  .slice(0, 3);
+
+const basePath = lang === 'es' ? '/blog/' : '/en/blog/';
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+    day: '2-digit', month: 'short', year: 'numeric',
+  }).format(d).toUpperCase();
+---
+
+<section id="blog" class="relative py-24 md:py-40 overflow-hidden">
+  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-tropic-purple/15 blur-[150px] pointer-events-none"></div>
+
+  <div class="container-x relative">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-14">
+      <div>
+        <div class="chip mb-6 reveal">
+          <span class="w-1 h-1 rounded-full bg-tropic-lime"></span>
+          {b.chip}
+        </div>
+        <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight">
+          <span>{b.title.split(' ').slice(0, -1).join(' ')}</span>{' '}
+          <span class="gradient-text italic font-light">{b.title.split(' ').at(-1)}</span>
+        </h2>
+      </div>
+      <p class="reveal max-w-md text-white/70">{b.subtitle}</p>
+    </div>
+
+    {posts.length === 0 ? (
+      <div class="text-center text-white/50 font-mono text-sm tracking-[0.25em] uppercase py-16">{b.empty}</div>
+    ) : (
+      <div class="grid md:grid-cols-3 gap-6">
+        {posts.map((p: any, i: number) => (
+          <a
+            href={`${basePath}${p.id}/`}
+            class="reveal group relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-tropic-aqua/30 transition-all flex flex-col"
+            style={`transition-delay:${i * 0.08}s`}
+            data-cursor="hover"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden">
+              {p.data.cover ? (
+                <img src={p.data.cover} alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110" />
+              ) : (
+                <div class="absolute inset-0 bg-tropic-gradient opacity-60"></div>
+              )}
+              <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/40 to-transparent"></div>
+              {p.data.city && (
+                <div class="absolute top-4 left-4 chip bg-ink-950/60">
+                  <span class="w-1 h-1 rounded-full bg-tropic-mango"></span>
+                  {p.data.city}
+                </div>
+              )}
+            </div>
+            <div class="p-6 md:p-7 flex flex-col gap-3 flex-1">
+              <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50">
+                {fmtDate(p.data.date)}
+                {p.data.venue && <span class="text-white/30"> · {p.data.venue}</span>}
+              </div>
+              <h3 class="font-display text-xl md:text-2xl font-bold leading-tight group-hover:gradient-text transition-colors">
+                {p.data.title}
+              </h3>
+              <p class="text-white/60 text-sm leading-relaxed flex-1">{p.data.description}</p>
+              <div class="mt-2 flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-tropic-aqua group-hover:text-tropic-mango transition-colors">
+                {b.read}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 7h12M7 1l6 6-6 6"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {posts.length > 0 && (
+      <div class="mt-12 text-center reveal">
+        <a href={basePath} class="btn-ghost" data-cursor="hover">
+          {b.all}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M7 1l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+</section>

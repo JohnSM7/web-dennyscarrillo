@@ -1,0 +1,75 @@
+---
+import { getLangFromUrl, useTranslations, type Lang } from '~/i18n/ui';
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const b = t('bio');
+---
+
+<section id="bio" class="relative py-24 md:py-40">
+  <div class="container-x">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+
+      <!-- Image side -->
+      <div class="lg:col-span-5 relative order-2 lg:order-1 reveal">
+        <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden group">
+          <div class="absolute inset-0 bg-tropic-gradient opacity-60 mix-blend-overlay z-10"></div>
+          <img
+            src="/fotos/Firefly.png"
+            alt="Dennys Carrillo"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent z-20"></div>
+
+          <!-- Floating badge -->
+          <div class="absolute top-6 left-6 z-30 chip bg-ink-950/50">
+            <span class="w-1.5 h-1.5 rounded-full bg-tropic-mango animate-pulse"></span>
+            100% Latin
+          </div>
+
+          <!-- Floating chip bottom -->
+          <div class="absolute bottom-6 left-6 right-6 z-30">
+            <div class="glass p-4 rounded-2xl border border-white/10 bg-ink-950/40 backdrop-blur-xl">
+              <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 mb-1">Signature</div>
+              <div class="font-display text-xl font-bold gold-text">Open Format</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative orbit -->
+        <div class="absolute -top-6 -right-6 w-24 h-24 rounded-full border border-gold/30 animate-spin-slow"></div>
+        <div class="absolute -bottom-8 -left-8 w-16 h-16 rounded-full bg-tropic-coral/20 blur-2xl"></div>
+      </div>
+
+      <!-- Text side -->
+      <div class="lg:col-span-7 order-1 lg:order-2">
+        <div class="chip mb-6 reveal">
+          <span class="w-1 h-1 rounded-full bg-tropic-aqua"></span>
+          {b.chip}
+        </div>
+
+        <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight mb-10">
+          {b.title.split(' ').map((w, i) => (
+            <span class={`inline-block ${i === b.title.split(' ').length - 1 ? 'gradient-text' : ''} mr-3`}>{w}</span>
+          ))}
+        </h2>
+
+        <div class="space-y-5 text-white/75 text-base md:text-lg leading-relaxed max-w-2xl">
+          <p class="reveal" style="transition-delay:.1s">{b.p1}</p>
+          <p class="reveal" style="transition-delay:.2s">{b.p2}</p>
+          <p class="reveal" style="transition-delay:.3s">{b.p3}</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12">
+          {b.stats.map((s, i) => (
+            <div class="reveal p-5 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-tropic-aqua/30 transition-all group" style={`transition-delay:${i * 0.1}s`}>
+              <div class="font-display text-3xl md:text-4xl font-bold gold-text group-hover:scale-110 transition-transform origin-left">{s.k}</div>
+              <div class="mt-2 font-mono text-[10px] tracking-[0.25em] uppercase text-white/60">{s.v}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

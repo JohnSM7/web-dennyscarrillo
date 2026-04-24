@@ -1,0 +1,130 @@
+---
+import { getLangFromUrl, useTranslations, type Lang } from '~/i18n/ui';
+import HeroCanvas from './HeroCanvas.vue';
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const h = t('hero');
+---
+
+<section id="home" class="relative min-h-[100svh] overflow-hidden flex items-center pt-28 pb-20">
+  <!-- Animated canvas -->
+  <HeroCanvas client:visible />
+
+  <!-- Portrait -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute right-[-5%] md:right-[4%] top-1/2 -translate-y-1/2 w-[90%] md:w-[58%] lg:w-[46%] max-w-[680px] hero-portrait">
+      <div class="relative">
+        <div class="absolute inset-0 bg-tropic-gradient blur-[80px] opacity-30 animate-glow"></div>
+        <img
+          src="/fotos/imgPrincipal.png"
+          alt="Dennys Carrillo"
+          class="relative w-full h-auto object-contain mix-blend-screen drop-shadow-[0_30px_80px_rgba(0,0,0,0.7)]"
+        />
+      </div>
+    </div>
+    <!-- Gradient ambient accents on portrait -->
+    <div class="absolute right-[10%] top-[15%] w-64 h-64 rounded-full bg-tropic-coral/30 blur-[100px]"></div>
+    <div class="absolute right-[8%] bottom-[10%] w-80 h-80 rounded-full bg-tropic-aqua/25 blur-[120px]"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="container-x relative z-10">
+    <div class="max-w-3xl">
+      <div class="mb-6 chip hero-eyebrow">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-tropic-coral animate-pulse"></span>
+        <span class="text-white/80">{h.eyebrow}</span>
+      </div>
+
+      <h1 class="font-display text-[clamp(3rem,9vw,8.5rem)] leading-[0.88] font-extrabold tracking-[-0.02em]">
+        <span class="hero-line block"><span class="hero-char-wrap">{h.title_1}</span></span>
+        <span class="hero-line block"><span class="gradient-text">{h.title_2}</span></span>
+        <span class="hero-line block italic font-light"><span class="gold-text">{h.title_3}</span></span>
+      </h1>
+
+      <p class="hero-sub mt-8 max-w-xl text-base md:text-lg text-white/70 leading-relaxed">
+        {h.subtitle}
+      </p>
+
+      <div class="hero-cta mt-10 flex flex-wrap gap-4">
+        <a href="#music" class="btn-primary group" data-cursor="hover">
+          <span class="inline-flex w-7 h-7 rounded-full bg-ink-950/20 items-center justify-center">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><path d="M10 6L0 12V0z"/></svg>
+          </span>
+          {h.cta_listen}
+        </a>
+        <a href="#contact" class="btn-ghost" data-cursor="hover">
+          {h.cta_book}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M7 1l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10 hero-scroll">
+    <span class="font-mono text-[10px] tracking-[0.4em] uppercase text-white/50">{h.scroll}</span>
+    <div class="w-[1px] h-14 bg-white/15 relative overflow-hidden">
+      <div class="absolute inset-x-0 h-8 bg-gradient-to-b from-tropic-aqua to-transparent scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- Bottom fade -->
+  <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink-950 pointer-events-none"></div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const run = () => {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.8 })
+      .from('.hero-line', {
+        y: 120,
+        opacity: 0,
+        duration: 1.1,
+        stagger: 0.12,
+        skewY: 4,
+      }, '-=0.4')
+      .from('.hero-sub', { y: 24, opacity: 0, duration: 0.9 }, '-=0.6')
+      .from('.hero-cta > *', {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+      }, '-=0.5')
+      .from('.hero-portrait', {
+        opacity: 0,
+        scale: 1.08,
+        x: 80,
+        duration: 1.5,
+        ease: 'power2.out',
+      }, '-=1.6')
+      .from('.hero-scroll', { opacity: 0, y: -10, duration: 0.7 }, '-=0.3');
+
+    // Subtle parallax on mouse
+    const portrait = document.querySelector<HTMLElement>('.hero-portrait');
+    if (portrait) {
+      window.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        gsap.to(portrait, { x: x, y: y, duration: 1.2, ease: 'power2.out' });
+      }, { passive: true });
+    }
+
+    // Scroll indicator line
+    gsap.fromTo('.scroll-line',
+      { y: -40 },
+      { y: 56, duration: 2.2, repeat: -1, ease: 'power1.inOut' }
+    );
+  };
+
+  if (document.readyState === 'complete') {
+    window.addEventListener('app:ready', run, { once: true });
+    setTimeout(run, 2500);
+  } else {
+    window.addEventListener('app:ready', run, { once: true });
+  }
+</script>

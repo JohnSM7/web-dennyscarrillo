@@ -1,0 +1,107 @@
+---
+import { getLangFromUrl, useTranslations, type Lang } from '~/i18n/ui';
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const m = t('music');
+
+const genres = [
+  { name: 'Reggaetón', color: 'from-tropic-magenta to-tropic-coral' },
+  { name: 'Afrobeats', color: 'from-tropic-sunset to-tropic-mango' },
+  { name: 'House', color: 'from-tropic-aqua to-tropic-ocean' },
+  { name: 'Disco', color: 'from-tropic-mango to-tropic-lime' },
+  { name: 'Salsa', color: 'from-tropic-coral to-tropic-magenta' },
+  { name: 'Bachata', color: 'from-tropic-purple to-tropic-magenta' },
+  { name: 'Techno', color: 'from-tropic-ocean to-tropic-purple' },
+  { name: 'Tropical', color: 'from-tropic-lime to-tropic-aqua' },
+];
+---
+
+<section id="music" class="relative py-24 md:py-40">
+  <div class="container-x">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div>
+        <div class="chip mb-6 reveal">
+          <span class="w-1 h-1 rounded-full bg-tropic-coral"></span>
+          {m.chip}
+        </div>
+        <h2 class="reveal font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-bold tracking-tight">
+          {m.title.split(' ').map((w, i) => (
+            <span class={`inline-block ${i === 0 ? '' : 'gradient-text'} mr-3`}>{w}</span>
+          ))}
+        </h2>
+      </div>
+      <p class="reveal max-w-md text-white/70">{m.subtitle}</p>
+    </div>
+
+    <!-- Mix placeholder cards -->
+    <div class="grid md:grid-cols-2 gap-6 mb-16">
+      {[0, 1].map((i) => (
+        <div class="reveal group relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-ink-800/40 backdrop-blur">
+          <div class={`absolute inset-0 opacity-60 mix-blend-overlay ${i === 0 ? 'bg-sunset-gradient' : 'bg-aqua-gradient'}`}></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/50 to-transparent"></div>
+
+          <!-- Equalizer visual -->
+          <div class="absolute bottom-20 left-8 right-8 flex items-end gap-1 h-28 opacity-70">
+            {Array.from({ length: 42 }).map((_, k) => (
+              <div
+                class="flex-1 rounded-t bg-white/80 eq-bar"
+                style={`--h:${20 + ((k * 37) % 80)}%; --d:${(k * 80) % 600}ms`}
+              ></div>
+            ))}
+          </div>
+
+          <div class="relative h-full flex flex-col justify-between p-7 md:p-10 z-10">
+            <div class="flex items-center justify-between">
+              <div class="chip bg-ink-950/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-tropic-mango animate-pulse"></span>
+                {m.placeholder_title}
+              </div>
+              <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/60">0{i + 1} / 02</span>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-bold mb-2">
+                {i === 0 ? 'Calor Latino Vol. ' + String(i + 1).padStart(2, '0') : 'Open Format Session ' + String(i + 1).padStart(2, '0')}
+              </h3>
+              <p class="text-white/70 text-sm max-w-md">{m.placeholder_text}</p>
+              <div class="mt-5 flex items-center gap-4">
+                <button disabled class="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all" data-cursor="hover">
+                  <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor"><path d="M14 8L0 16V0z"/></svg>
+                </button>
+                <div class="font-mono text-[11px] tracking-[0.25em] uppercase text-white/60">
+                  <div>SoundCloud · Mixcloud</div>
+                  <div class="text-white/40">Coming soon</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Genre cloud -->
+    <div class="reveal">
+      <div class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 mb-6 text-center">
+        · Géneros · Genres ·
+      </div>
+      <div class="flex flex-wrap gap-3 justify-center">
+        {genres.map((g) => (
+          <span class={`px-5 py-2.5 rounded-full font-display font-semibold text-sm text-white bg-gradient-to-r ${g.color} hover:scale-110 transition-transform cursor-default`}>
+            {g.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .eq-bar {
+    height: var(--h);
+    transform-origin: bottom;
+    animation: eq 1.2s var(--d) ease-in-out infinite alternate;
+  }
+  @keyframes eq {
+    0% { transform: scaleY(0.2); opacity: 0.4; }
+    100% { transform: scaleY(1); opacity: 0.9; }
+  }
+</style>
